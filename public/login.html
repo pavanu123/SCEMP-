@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - LoopCart Seller</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 400px; margin: 60px auto; }
+    label, input, button { display: block; width: 100%; margin-bottom: 12px; }
+    label { font-weight: 600; }
+    input, button { padding: 10px; box-sizing: border-box; }
+    button { background-color: #3b82f6; color: white; font-weight: 700; border: none; cursor: pointer; }
+    button:hover { background-color: #2563eb; }
+    p { margin-top: 16px; text-align: center; }
+    a { color: #2563eb; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h2>Seller Login</h2>
+  <form action="/login" method="POST" autocomplete="off">
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" required autocomplete="off" />
+    
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required autocomplete="off" />
+    
+    <button type="submit">Login</button>
+  </form>
+  <p>Don't have an account? <a href="/register">Register here</a></p>
+</body>
+</html>

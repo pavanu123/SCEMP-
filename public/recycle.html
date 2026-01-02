@@ -1,0 +1,2765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOOPCART - Recycler Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --primary-light: #4caf50;
+            --secondary: #ff9800;
+            --danger: #f44336;
+            --warning: #ffc107;
+            --info: #2196f3;
+            --light: #f5f5f5;
+            --dark: #212121;
+            --text: #333333;
+            --text-light: #757575;
+            --border: #e0e0e0;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+        }
+
+        .location-select {
+            padding: 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius) 0 0 var(--radius);
+            background-color: white;
+            font-size: 0.9rem;
+            min-width: 120px;
+        }
+
+        .search-box {
+            display: flex;
+            flex: 1;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border);
+            border-right: none;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 1.2rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .login-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .user-profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            position: relative;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s;
+        }
+
+        .user-profile-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            width: 200px;
+            padding: 0.5rem 0;
+            display: none;
+            z-index: 10;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .nav-link-saved {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: background-color 0.3s;
+        }
+
+        .nav-link-saved:hover {
+            background-color: #f5f5f5;
+        }
+
+        .saved-icon {
+            color: var(--danger);
+        }
+
+        .saved-count-nav {
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-categories {
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            padding: 0.8rem 0;
+        }
+
+        .categories-dropdown {
+            background-color: var(--primary-dark);
+            color: white;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: var(--radius);
+            white-space: nowrap;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Main Container */
+        .main-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            max-width: 1400px;
+            margin: 2rem auto;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .category-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            color: var(--text);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: background-color 0.3s;
+        }
+
+        .category-link:hover {
+            background-color: #f0f0f0;
+        }
+
+        .category-icon {
+            color: var(--primary);
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Content Area */
+        .content-area {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .sort-filter {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-select {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: white;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .filter-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .product-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Product Detail Page */
+        .product-detail-page {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: none;
+        }
+
+        .back-btn {
+            background-color: white;
+            border: 1px solid var(--border);
+            padding: 0.7rem 1.2rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .product-detail {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .product-detail-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .product-detail-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-detail-subtitle {
+            color: var(--text-light);
+        }
+
+        .product-detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 1.5rem;
+        }
+
+        .product-images {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .main-image {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 400px;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .login-required-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .login-required-message h3 {
+            margin-bottom: 1rem;
+        }
+
+        .thumbnail-images {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .thumbnail.active {
+            border-color: var(--primary);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .price-section {
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: var(--radius);
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-details {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .current-bid-info {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .highest-bid, .bid-count {
+            font-weight: 600;
+        }
+
+        .seller-info {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: var(--radius);
+            align-items: center;
+        }
+
+        .seller-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .seller-details h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .seller-details p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f57c00;
+        }
+
+        .btn-outline {
+            background-color: white;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            background-color: #f5f5f5;
+        }
+
+        .product-specs {
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: var(--radius);
+        }
+
+        .product-specs h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .specs-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .specs-table td {
+            padding: 0.8rem 0;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            width: 40%;
+            color: var(--text-light);
+        }
+
+        .description-section {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .description-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Bidding Section */
+        .bidding-section {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .bidding-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .bidding-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.7rem 1.2rem;
+            background-color: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius) var(--radius) 0 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .bid-tab-content {
+            display: none;
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: 0 var(--radius) var(--radius) var(--radius);
+        }
+
+        .bid-tab-content.active {
+            display: block;
+        }
+
+        .bid-section {
+            max-width: 400px;
+        }
+
+        .bid-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .bid-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .bid-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .bid-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .user-bid-status {
+            background-color: #e8f5e9;
+            border: 1px solid #4caf50;
+            border-radius: var(--radius);
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .user-bid-status i {
+            color: #4caf50;
+            margin-right: 0.5rem;
+        }
+
+        .bid-history-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .bid-history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bid-history-table th,
+        .bid-history-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bid-history-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .bid-history-row.user-bid {
+            background-color: #f0f8ff;
+            border-left: 3px solid var(--info);
+        }
+
+        .bid-history-row.other-bid {
+            border-left: 3px solid #e0e0e0;
+        }
+
+        .bidder-badge {
+            display: inline-block;
+            background-color: var(--info);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+        }
+
+        .graph-container {
+            height: 300px;
+        }
+
+        /* Saved Products Page */
+        .saved-products-page {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: none;
+        }
+
+        .saved-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .saved-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--primary);
+        }
+
+        .saved-count {
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .saved-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .saved-product-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            background-color: white;
+            position: relative;
+        }
+
+        .saved-product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .remove-saved {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 2;
+            transition: background-color 0.3s;
+        }
+
+        .remove-saved:hover {
+            background-color: #f5f5f5;
+        }
+
+        .empty-saved {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        .empty-saved i {
+            font-size: 3rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .empty-saved h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Auth Modal */
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .auth-modal.show {
+            display: flex;
+        }
+
+        .auth-modal-content {
+            background-color: white;
+            border-radius: var(--radius);
+            width: 400px;
+            max-width: 90%;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-auth-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .auth-modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .auth-modal-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .auth-modal-body {
+            padding: 1.5rem;
+        }
+
+        .alert {
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+
+        .alert-error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #f44336;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .auth-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .terms {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-light);
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .auth-divider span {
+            padding: 0 1rem;
+        }
+
+        /* WhatsApp Modal */
+        .whatsapp-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .whatsapp-modal-content {
+            background-color: white;
+            border-radius: var(--radius);
+            width: 400px;
+            max-width: 90%;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-icon {
+            font-size: 3rem;
+            color: #25D366;
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-modal h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .whatsapp-modal p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .whatsapp-modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .product-detail-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .search-container {
+                margin: 0;
+                width: 100%;
+            }
+
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .bidding-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .bidding-tabs {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo"><i class="fas fa-recycle"></i> LOOPCART Recyclers</div>
+            <div class="search-container">
+                <select class="location-select" id="locationSelect">
+                    <option value="india">India</option>
+                    <option value="bangalore">Bangalore</option>
+                    <option value="mumbai">Mumbai</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="chennai">Chennai</option>
+                </select>
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Find recyclable materials..." id="searchInput">
+                    <button class="search-btn" onclick="performSearch()"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <div class="login-container">
+                <div id="userProfileBtn" class="user-profile-btn" style="display: none;">
+                    <i class="fas fa-user"></i> 
+                    <span id="userNameDisplay">User</span>
+                    <i class="fas fa-chevron-down" style="margin-left: 8px; font-size: 12px;"></i>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-item" onclick="goToDashboard()">
+                            <i class="fas fa-tachometer-alt" style="margin-right: 8px;"></i> Dashboard
+                        </div>
+                        <div class="dropdown-item" onclick="viewProfile()">
+                            <i class="fas fa-user" style="margin-right: 8px;"></i> Profile
+                        </div>
+                        <div class="dropdown-item" onclick="amazonLogout()">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Logout
+                        </div>
+                    </div>
+                </div>
+                <button id="loginButton" class="login-btn" onclick="openAuthModal()">Login</button>
+            </div>
+            <div> 
+                <a href="#" class="nav-link-saved" onclick="showSavedProducts()">
+                    <i class="fas fa-heart saved-icon"></i> Saved Products
+                    <span class="saved-count-nav" id="savedCountNav">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <div class="nav-categories">
+                <button class="categories-dropdown">ALL CATEGORIES <i class="fas fa-chevron-up"></i></button>
+                <a href="#" class="nav-link">Plastic Waste</a>
+                <a href="#" class="nav-link">Metal Scrap</a>
+                <a href="#" class="nav-link">Paper & Cardboard</a>
+                <a href="#" class="nav-link">Electronics</a>
+                <a href="#" class="nav-link">Glass Materials</a>
+                <a href="#" class="nav-link">Organic Waste</a>
+                <a href="#" class="nav-link">Textiles</a>
+                <a href="#" class="nav-link">Construction Waste</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Product Listing Page -->
+    <div class="main-container" id="productListingPage">
+        <aside class="sidebar">
+            <h3>Recycling Categories</h3>
+            <ul class="category-list">
+                <li class="category-item"><a href="#" class="category-link" onclick="filterByCategory('plastic')"><i class="fas fa-wine-bottle category-icon"></i> Plastic Materials</a></li>
+                <li class="category-item"><a href="#" class="category-link" onclick="filterByCategory('metal')"><i class="fas fa-cog category-icon"></i> Metal & Scrap</a></li>
+                <li class="category-item"><a href="#" class="category-link" onclick="filterByCategory('paper')"><i class="fas fa-newspaper category-icon"></i> Paper & Cardboard</a></li>
+                <li class="category-item"><a href="#" class="category-link" onclick="filterByCategory('electronics')"><i class="fas fa-laptop category-icon"></i> Electronics & E-waste</a></li>
+                <li class="category-item"><a href="#" class="category-link" onclick="filterByCategory('glass')"><i class="fas fa-glass-whiskey category-icon"></i> Glass Materials</a></li>
+                <li class="category-item"><a href="#" class="category-link" onclick="filterByCategory('organic')"><i class="fas fa-leaf category-icon"></i> Organic Waste</a></li>
+                <li class="category-item"><a href="#" class="category-link" onclick="filterByCategory('textile')"><i class="fas fa-tshirt category-icon"></i> Textiles & Fabric</a></li>
+                <li class="category-item"><a href="#" class="category-link" onclick="filterByCategory('construction')"><i class="fas fa-hammer category-icon"></i> Construction Waste</a></li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            <div class="content-header">
+                <h2 class="content-title">Fresh Recyclable Materials</h2>
+                <div class="sort-filter">
+                    <select class="sort-select" onchange="sortProducts(this.value)">
+                        <option value="newest">Newest first</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="distance">Distance</option>
+                    </select>
+                    <button class="filter-btn"><i class="fas fa-filter"></i> Filter</button>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Detail Page -->
+    <div class="product-detail-container product-detail-page" id="productDetailPage">
+        <button class="back-btn" onclick="goBackToListing()">
+            <i class="fas fa-arrow-left"></i> Back to Listings
+        </button>
+        
+        <div class="breadcrumb">
+            <a href="#" onclick="goBackToListing()">Recyclable Materials</a> > 
+            <span id="breadcrumbCategory">Category</span> > 
+            <span id="breadcrumbProduct">Product</span>
+        </div>
+        
+        <div class="product-detail">
+            <div class="product-detail-header">
+                <h1 class="product-detail-title" id="detailTitle"></h1>
+                <p class="product-detail-subtitle" id="detailSubtitle"></p>
+            </div>
+            
+            <div class="product-detail-content">
+                <div class="product-images">
+                    <div class="main-image">
+                        <img id="mainProductImage" src="" alt="Product Image">
+                        <div id="loginRequiredOverlay" class="login-required-overlay" style="display: none;">
+                            <div class="login-required-message">
+                                <h3>Login Required</h3>
+                                <p>Please login to view product details and place bids</p>
+                                <button class="auth-btn" onclick="openAuthModal()" style="margin-top: 10px;">Login Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="thumbnail-images" id="thumbnailContainer"></div>
+                </div>
+                
+                <div class="product-info-detail">
+                    <div class="price-section">
+                        <div class="price" id="detailPrice"></div>
+                        <div class="price-details" id="priceDetails"></div>
+                        <div class="current-bid-info">
+                            <div class="highest-bid" id="highestBid">Highest Bid: ₹0</div>
+                            <div class="bid-count" id="bidCount">Total Bids: 0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="seller-info">
+                        <div class="seller-avatar" id="sellerAvatar"></div>
+                        <div class="seller-details">
+                            <h4 id="sellerName"></h4>
+                            <p id="sellerMemberSince"></p>
+                            <p><i class="fas fa-phone"></i> <span id="sellerPhone"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-whatsapp" onclick="openWhatsAppChat()">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </button>
+                        <button class="btn btn-secondary" onclick="makeOffer()">
+                            <i class="fas fa-tag"></i> Make Offer
+                        </button>
+                        <button class="btn btn-outline" onclick="saveProduct()">
+                            <i class="fas fa-heart"></i> Save
+                        </button>
+                    </div>
+                    
+                    <div class="product-specs">
+                        <h3>Product Details</h3>
+                        <table class="specs-table" id="specsTable"></table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="description-section">
+                <h3>Description</h3>
+                <p id="productDescription"></p>
+            </div>
+            
+            <!-- Bidding Section with Graph and History -->
+            <div class="bidding-section">
+                <div class="bidding-header">
+                    <h3>Bidding Activity</h3>
+                    <div class="bidding-tabs">
+                        <button class="tab-btn active" onclick="switchBidTab('bid-form')">Place Bid</button>
+                        <button class="tab-btn" onclick="switchBidTab('bid-history')">Bid History</button>
+                        <button class="tab-btn" onclick="switchBidTab('bid-graph')">Price Graph</button>
+                    </div>
+                </div>
+                
+                <!-- Bid Form Tab -->
+                <div class="bid-tab-content active" id="bid-form">
+                    <div class="bid-section">
+                        <h3>Place Your Bid</h3>
+                        <input type="number" placeholder="Enter your bid amount" id="bidAmount" class="bid-input" />
+                        <button class="bid-btn" onclick="placeBid()">Place Bid</button>
+                        <div id="bidMessage" style="margin-top:0.5rem;"></div>
+                    </div>
+                </div>
+                
+                <!-- Bid History Tab -->
+                <div class="bid-tab-content" id="bid-history">
+                    <div class="bid-history-section">
+                        <h3>Bid History</h3>
+                        <div class="bid-history-container">
+                            <table class="bid-history-table" id="bidHistoryTable">
+                                <thead>
+                                    <tr>
+                                        <th>Bidder</th>
+                                        <th>Amount</th>
+                                        <th>Time</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bidHistoryBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bid Graph Tab -->
+                <div class="bid-tab-content" id="bid-graph">
+                    <div class="bid-graph-section">
+                        <h3>Bid Price Trend</h3>
+                        <div class="graph-container">
+                            <canvas id="bidChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saved Products Page -->
+    <div class="saved-products-page" id="savedProductsPage">
+        <div class="saved-header">
+            <h1 class="saved-title">
+                <i class="fas fa-heart"></i> My Saved Products
+                <span class="saved-count" id="savedCount">0</span>
+            </h1>
+            <button class="back-btn" onclick="goBackToListing()">
+                <i class="fas fa-arrow-left"></i> Back to Listings
+            </button>
+        </div>
+
+        <div id="savedProductsContainer">
+            <div class="empty-saved" id="emptySavedMessage">
+                <i class="fas fa-heart"></i>
+                <h3>No Saved Products</h3>
+                <p>Products you save will appear here for quick access.</p>
+                <button class="btn btn-primary" onclick="goBackToListing()" style="margin-top: 1rem;">
+                    <i class="fas fa-shopping-bag"></i> Browse Products
+                </button>
+            </div>
+            <div class="saved-products-grid" id="savedProductsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <button class="close-auth-modal" onclick="closeAuthModal()">&times;</button>
+            
+            <div class="auth-modal-header">
+                <div class="auth-modal-logo">LOOPCART Recyclers</div>
+            </div>
+
+            <div class="auth-modal-body">
+                <div id="authAlert" class="alert" style="display: none;"></div>
+
+                <!-- Login Form -->
+                <div id="loginSection">
+                    <h2 style="margin-bottom: 20px; font-size: 20px; color: #333;">Sign in to Recyclers</h2>
+                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        
+                        <button type="submit" class="auth-btn" id="loginBtn">
+                            Sign In
+                        </button>
+                    </form>
+
+                    <div class="terms">
+                        By continuing, you agree to LOOPCART's Conditions of Use and Privacy Notice.
+                    </div>
+
+                    <div class="auth-divider">
+                        <span>New to LOOPCART?</span>
+                    </div>
+
+                    <button class="auth-btn" style="background: #f0f0f0; color: #333;" onclick="showSignupSection()">
+                        Create your Recycler account
+                    </button>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signupSection" style="display: none;">
+                    <h2 style="margin-bottom: 20px; font-size: 20px; color: #333;">Create Recycler account</h2>
+                    
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupName">Your name</label>
+                            <input type="text" class="form-control" id="signupName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPhone">Mobile number</label>
+                            <input type="tel" class="form-control" id="signupPhone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" placeholder="At least 6 characters" required>
+                        </div>
+                        
+                        <button type="submit" class="auth-btn" id="signupBtn">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div class="terms">
+                        By creating an account, you agree to LOOPCART's Conditions of Use and Privacy Notice.
+                    </div>
+
+                    <div class="auth-divider">
+                        <span>Already have an account?</span>
+                    </div>
+
+                    <button class="auth-btn" style="background: #f0f0f0; color: #333;" onclick="showLoginSection()">
+                        Sign in
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Confirmation Modal -->
+    <div class="whatsapp-modal" id="whatsappModal">
+        <div class="whatsapp-modal-content">
+            <div class="whatsapp-icon">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <h3>Chat on WhatsApp</h3>
+            <p>You'll be redirected to WhatsApp to chat with the seller about this product:</p>
+            <p><strong id="whatsappProductTitle"></strong></p>
+            <p>Seller: <strong id="whatsappSellerName"></strong></p>
+            <p>Phone: <strong id="whatsappSellerPhone"></strong></p>
+            <div class="whatsapp-modal-buttons">
+                <button class="btn btn-outline" onclick="closeWhatsAppModal()">Cancel</button>
+                <button class="btn btn-whatsapp" onclick="redirectToWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> Open WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let products = [];
+        let currentProduct = null;
+        let currentSellerPhone = '';
+        let bidChart = null;
+        let currentUser = null;
+
+        // API Configuration
+        const API_BASE = 'http://localhost:5000/api';
+
+        // Initialize user data storage
+        function initializeUserData() {
+            if (!localStorage.getItem('recycler_data_initialized')) {
+                const recyclerData = {
+                    'pavan@gmail.com': {
+                        name: 'Pavan Kumar',
+                        email: 'pavan@gmail.com',
+                        phone: '+91 9876543210',
+                        savedProducts: [],
+                        bids: [],
+                        activity: ['Account created']
+                    },
+                    'keerthi@gmail.com': {
+                        name: 'Keerthi Reddy',
+                        email: 'keerthi@gmail.com',
+                        phone: '+91 9876543211',
+                        savedProducts: [],
+                        bids: [],
+                        activity: ['Account created']
+                    }
+                };
+                
+                localStorage.setItem('recycler_data', JSON.stringify(recyclerData));
+                localStorage.setItem('recycler_data_initialized', 'true');
+            }
+        }
+
+        // Check login status on page load
+        function checkLoginStatus() {
+            const userData = localStorage.getItem('current_recycler_user');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                updateUserInterface();
+            }
+        }
+
+        function updateUserInterface() {
+            const loginBtn = document.getElementById('loginButton');
+            const userProfileBtn = document.getElementById('userProfileBtn');
+            
+            if (currentUser) {
+                loginBtn.style.display = 'none';
+                userProfileBtn.style.display = 'flex';
+                document.getElementById('userNameDisplay').textContent = currentUser.name;
+                
+                // Make user name clickable for dashboard
+                const userNameDisplay = document.getElementById('userNameDisplay');
+                userNameDisplay.style.cursor = 'pointer';
+                userNameDisplay.title = 'Click to go to Dashboard';
+                userNameDisplay.onclick = goToDashboard;
+                
+                loadUserSpecificData();
+            } else {
+                loginBtn.style.display = 'block';
+                userProfileBtn.style.display = 'none';
+            }
+        }
+
+        // Enhanced loadUserSpecificData function
+function loadUserSpecificData() {
+    if (!currentUser) return;
+    
+    try {
+        const recyclerData = JSON.parse(localStorage.getItem('recycler_data') || '{}');
+        const userData = recyclerData[currentUser.email];
+        
+        if (userData) {
+            updateSavedCount(userData.savedProducts ? userData.savedProducts.length : 0);
+        } else {
+            // Initialize user data if it doesn't exist
+            recyclerData[currentUser.email] = {
+                name: currentUser.name,
+                email: currentUser.email,
+                phone: currentUser.phone,
+                savedProducts: [],
+                bids: [],
+                activity: ['Account created']
+            };
+            localStorage.setItem('recycler_data', JSON.stringify(recyclerData));
+            updateSavedCount(0);
+        }
+    } catch (error) {
+        console.error('Error loading user data:', error);
+        updateSavedCount(0);
+    }
+}
+
+        // Dashboard Redirect Function
+        function goToDashboard() {
+            window.location.href = 'redashboard.html';
+            closeUserDropdown();
+        }
+
+        // Auth Modal Functions
+        function openAuthModal() {
+            document.getElementById('authModal').classList.add('show');
+            showLoginSection();
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('show');
+            document.getElementById('authAlert').style.display = 'none';
+        }
+
+        function showLoginSection() {
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('signupSection').style.display = 'none';
+            document.getElementById('authAlert').style.display = 'none';
+        }
+
+        function showSignupSection() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('signupSection').style.display = 'block';
+            document.getElementById('authAlert').style.display = 'none';
+        }
+
+        // User Authentication - FIXED: Store in MongoDB
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleLogin();
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleSignup();
+        });
+
+     
+
+    // Alternative approach with different variable names
+    async function handleLogin() {
+        const userEmail = document.getElementById('loginEmail').value;
+        const userPassword = document.getElementById('loginPassword').value;
+        const alertDiv = document.getElementById('authAlert');
+
+        if (!userEmail || !userPassword) {
+            alertDiv.textContent = 'Please fill in all fields';
+            alertDiv.className = 'alert alert-error';
+            alertDiv.style.display = 'block';
+            return;
+        }
+
+        const loginData = {
+            email: userEmail,
+            password: userPassword,
+            role: 'recycler'
+        };
+
+        console.log('Login data being sent:', loginData);
+
+        try {
+            const response = await fetch(`${API_BASE}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginData)
+            });
+
+            const data = await response.json();
+            console.log('Login response:', data);
+
+            if (data.success) {
+                currentUser = data.user;
+                localStorage.setItem('current_recycler_user', JSON.stringify(data.user));
+                
+                alertDiv.textContent = `Welcome back, ${data.user.name}!`;
+                alertDiv.className = 'alert alert-success';
+                alertDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    closeAuthModal();
+                    updateUserInterface();
+                    if (currentProduct) {
+                        openProductDetail(currentProduct);
+                    }
+                }, 1000);
+            } else {
+                alertDiv.textContent = data.message || 'Login failed. Please try again.';
+                alertDiv.className = 'alert alert-error';
+                alertDiv.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alertDiv.textContent = 'Server error. Please try again later.';
+            alertDiv.className = 'alert alert-error';
+            alertDiv.style.display = 'block';
+        }
+    }
+
+    async function handleSignup() {
+        const userName = document.getElementById('signupName').value;
+        const userEmail = document.getElementById('signupEmail').value;
+        const userPhone = document.getElementById('signupPhone').value;
+        const userPassword = document.getElementById('signupPassword').value;
+        const alertDiv = document.getElementById('authAlert');
+
+        if (!userName || !userEmail || !userPhone || !userPassword) {
+            alertDiv.textContent = 'Please fill in all fields';
+            alertDiv.className = 'alert alert-error';
+            alertDiv.style.display = 'block';
+            return;
+        }
+
+        const signupData = {
+            name: userName,
+            email: userEmail,
+            phone: userPhone,
+            password: userPassword,
+            role: 'recycler'
+        };
+
+        console.log('Signup data being sent:', signupData);
+
+        try {
+            const response = await fetch(`${API_BASE}/auth/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(signupData)
+            });
+
+            const data = await response.json();
+            console.log('Signup response:', data);
+
+            if (data.success) {
+                currentUser = data.user;
+                localStorage.setItem('current_recycler_user', JSON.stringify(data.user));
+                
+                alertDiv.textContent = `Welcome to LOOPCART Recyclers, ${userName}!`;
+                alertDiv.className = 'alert alert-success';
+                alertDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    closeAuthModal();
+                    updateUserInterface();
+                }, 1500);
+            } else {
+                alertDiv.textContent = data.message || 'Signup failed. Please try again.';
+                alertDiv.className = 'alert alert-error';
+                alertDiv.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Signup error:', error);
+            alertDiv.textContent = 'Server error. Please try again later.';
+            alertDiv.className = 'alert alert-error';
+            alertDiv.style.display = 'block';
+        }
+    }
+
+
+        function amazonLogout() {
+            currentUser = null;
+            localStorage.removeItem('current_recycler_user');
+            updateUserInterface();
+            closeUserDropdown();
+            goBackToListing();
+        }
+
+        function viewProfile() {
+            if (currentUser) {
+                alert(`Profile:\nName: ${currentUser.name}\nEmail: ${currentUser.email}\nPhone: ${currentUser.phone}`);
+            }
+            closeUserDropdown();
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function closeUserDropdown() {
+            document.getElementById('userDropdown').classList.remove('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#userProfileBtn')) {
+                closeUserDropdown();
+            }
+        });
+
+        // Product Functions with Login Check - FIXED: Seller name fetching
+        // Product Functions with Login Check - FIXED: Proper seller name fetching from DB
+function openProductDetail(product) {
+    currentProduct = product;
+    
+    // Hide listing page and show detail page
+    document.getElementById('productListingPage').style.display = 'none';
+    document.getElementById('productDetailPage').style.display = 'block';
+    
+    // Populate product details from backend data
+    document.getElementById('detailTitle').textContent = product.title;
+    document.getElementById('detailSubtitle').textContent = `${product.category} - ${product.location}`;
+    document.getElementById('detailPrice').textContent = `₹${product.price}`;
+    document.getElementById('priceDetails').textContent = `Weight: ${product.weight || 'N/A'} | Category: ${product.category}`;
+    document.getElementById('productDescription').textContent = product.description || 'No description available.';
+
+      // DEBUG: Log the entire product object to see available fields
+    console.log('🔍 Full product data:', product);
+    console.log('🔍 Available seller fields:', {
+        seller: product.seller,
+        sellerName: product.sellerName,
+        sellerUsername: product.sellerUsername,
+        username: product.username,
+        user: product.user,
+        postedBy: product.postedBy,
+        owner: product.owner,
+        vendor: product.vendor
+    });
+    
+    // CORRECTED: Set seller info from backend data - handle different possible field names
+    currentSellerPhone = product.sellerPhone || product.phone || product.contact || '+91 9632869766';
+    const sellerName = product.seller || 'Unknown Seller';
+    
+    document.getElementById('sellerPhone').textContent = currentSellerPhone;
+    document.getElementById('sellerName').textContent = sellerName;
+    document.getElementById('sellerMemberSince').textContent = 'Member since ' + (new Date(product.createdAt || product.date || Date.now()).getFullYear());
+    
+    // Set seller avatar initials
+    const sellerAvatar = document.getElementById('sellerAvatar');
+    sellerAvatar.textContent = sellerName.charAt(0).toUpperCase();
+    
+    // Set breadcrumb
+    document.getElementById('breadcrumbCategory').textContent = product.category;
+    document.getElementById('breadcrumbProduct').textContent = product.title;
+    
+    // FIXED: Use the same image URL construction as old working code
+    const mainImage = document.getElementById('mainProductImage');
+    const imageUrl = product.image 
+        ? `http://localhost:5000/uploads/${product.image}`
+        : 'https://via.placeholder.com/600x400?text=No+Image';
+    
+    mainImage.src = imageUrl;
+    mainImage.onerror = function() {
+        console.log('Main image failed to load:', imageUrl);
+        this.src = 'https://via.placeholder.com/600x400?text=Image+Not+Found';
+        this.onerror = null; // Prevent infinite loop
+    };
+    
+    // Create thumbnails
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+    thumbnailContainer.innerHTML = '';
+    
+    // FIXED: Use the same image URL for thumbnails
+    addThumbnail(imageUrl, mainImage, true);
+    
+    // Add additional thumbnails if available
+    for (let i = 1; i <= 3; i++) {
+        addThumbnail(`https://via.placeholder.com/150x100?text=Image+${i}`, mainImage, false);
+    }
+    
+    // CORRECTED: Populate product specs with proper field handling
+    const specsTable = document.getElementById('specsTable');
+    specsTable.innerHTML = `
+        <tr><td class="spec-label">Category</td><td>${product.category}</td></tr>
+        <tr><td class="spec-label">Weight</td><td>${product.weight || 'N/A'}</td></tr>
+        <tr><td class="spec-label">Location</td><td>${product.location}</td></tr>
+        <tr><td class="spec-label">Condition</td><td>${product.condition || 'Good'}</td></tr>
+        <tr><td class="spec-label">Seller Name</td><td>${sellerName}</td></tr>
+        <tr><td class="spec-label">Posted Date</td><td>${new Date(product.createdAt || product.date || Date.now()).toLocaleDateString()}</td></tr>
+        <tr><td class="spec-label">Seller Contact</td><td>${currentSellerPhone}</td></tr>
+    `;
+    
+    // Load bid history for this product
+    loadBidData(product._id);
+    
+    // Debug: Log the product data to see what's available
+    console.log('Product data:', product);
+    console.log('Image URL:', imageUrl);
+}
+
+// Debug function to check saved products
+function debugSavedProducts() {
+    if (!currentUser) {
+        console.log('No user logged in');
+        return;
+    }
+    
+    const recyclerData = JSON.parse(localStorage.getItem('recycler_data') || '{}');
+    const userData = recyclerData[currentUser.email];
+    
+    console.log('Current user:', currentUser.email);
+    console.log('User data:', userData);
+    console.log('Saved products:', userData ? userData.savedProducts : 'No user data');
+    
+    if (userData && userData.savedProducts) {
+        userData.savedProducts.forEach((product, index) => {
+            console.log(`Product ${index + 1}:`, product);
+        });
+    }
+}
+
+// Call this in the console to debug: debugSavedProducts()
+
+        // Saved Products Functions - User Specific
+        // Enhanced saveProduct function with proper product storage
+function saveProduct() {
+    if (!currentUser) {
+        openAuthModal();
+        return;
+    }
+    
+    if (!currentProduct) return;
+    
+    try {
+        const recyclerData = JSON.parse(localStorage.getItem('recycler_data') || '{}');
+        const userData = recyclerData[currentUser.email] || {
+            name: currentUser.name,
+            email: currentUser.email,
+            phone: currentUser.phone,
+            savedProducts: [],
+            bids: [],
+            activity: ['Account created']
+        };
+        
+        if (!userData.savedProducts) {
+            userData.savedProducts = [];
+        }
+        
+        // Create a clean product object with only necessary data
+        const productToSave = {
+            _id: currentProduct._id,
+            title: currentProduct.title,
+            price: currentProduct.price,
+            category: currentProduct.category,
+            location: currentProduct.location,
+            image: currentProduct.image,
+            weight: currentProduct.weight,
+            condition: currentProduct.condition,
+            description: currentProduct.description,
+            seller: currentProduct.seller || currentProduct.sellerName,
+            sellerPhone: currentProduct.sellerPhone || currentProduct.phone,
+            createdAt: currentProduct.createdAt || new Date().toISOString()
+        };
+        
+        // Check if product is already saved
+        const isAlreadySaved = userData.savedProducts.some(product => product._id === currentProduct._id);
+        
+        if (isAlreadySaved) {
+            alert("⚠️ This product is already in your saved list!");
+            return;
+        }
+        
+        // Add to saved products
+        userData.savedProducts.push(productToSave);
+        recyclerData[currentUser.email] = userData;
+        localStorage.setItem('recycler_data', JSON.stringify(recyclerData));
+        
+        // Update UI
+        updateSaveButton();
+        updateSavedCount(userData.savedProducts.length);
+        
+        alert("✅ Product saved to your favorites!");
+        
+        console.log('Saved products:', userData.savedProducts);
+        
+    } catch (error) {
+        console.error('Error saving product:', error);
+        alert("❌ Failed to save product. Please try again.");
+    }
+}
+
+        // Enhanced removeSavedProduct function
+function removeSavedProduct(productId, event) {
+    if (event) {
+        event.stopPropagation(); // Prevent triggering the card click
+    }
+    
+    if (!currentUser) return;
+    
+    try {
+        const recyclerData = JSON.parse(localStorage.getItem('recycler_data') || '{}');
+        const userData = recyclerData[currentUser.email];
+        
+        if (userData && userData.savedProducts) {
+            // Remove the product
+            userData.savedProducts = userData.savedProducts.filter(product => product._id !== productId);
+            recyclerData[currentUser.email] = userData;
+            localStorage.setItem('recycler_data', JSON.stringify(recyclerData));
+            
+            // Update UI
+            displaySavedProducts();
+            updateSavedCount(userData.savedProducts.length);
+            
+            // Update save button if we're on the product detail page
+            if (currentProduct && currentProduct._id === productId) {
+                updateSaveButton();
+            }
+            
+            console.log('Removed product. Remaining saved products:', userData.savedProducts);
+        }
+    } catch (error) {
+        console.error('Error removing saved product:', error);
+        alert("❌ Failed to remove product from saved list.");
+    }
+}
+
+        // Enhanced updateSaveButton function
+function updateSaveButton() {
+    const saveButton = document.querySelector('.btn-outline');
+    if (!saveButton || !currentUser || !currentProduct) return;
+    
+    try {
+        const recyclerData = JSON.parse(localStorage.getItem('recycler_data') || '{}');
+        const userData = recyclerData[currentUser.email];
+        const isSaved = userData && userData.savedProducts 
+            ? userData.savedProducts.some(product => product._id === currentProduct._id)
+            : false;
+        
+        if (isSaved) {
+            saveButton.innerHTML = '<i class="fas fa-heart" style="color: var(--danger);"></i> Saved';
+            saveButton.style.color = 'var(--danger)';
+            saveButton.style.borderColor = 'var(--danger)';
+            saveButton.onclick = () => {
+                removeSavedProduct(currentProduct._id);
+                alert("🗑️ Product removed from saved list!");
+            };
+        } else {
+            saveButton.innerHTML = '<i class="fas fa-heart"></i> Save';
+            saveButton.style.color = '';
+            saveButton.style.borderColor = '';
+            saveButton.onclick = saveProduct;
+        }
+    } catch (error) {
+        console.error('Error updating save button:', error);
+    }
+}
+
+        // Enhanced updateSavedCount function
+function updateSavedCount(count) {
+    const navCount = document.getElementById('savedCountNav');
+    const pageCount = document.getElementById('savedCount');
+    
+    try {
+        if (count !== undefined) {
+            navCount.textContent = count;
+            pageCount.textContent = count;
+        } else if (currentUser) {
+            const recyclerData = JSON.parse(localStorage.getItem('recycler_data') || '{}');
+            const userData = recyclerData[currentUser.email];
+            const savedCount = userData && userData.savedProducts ? userData.savedProducts.length : 0;
+            navCount.textContent = savedCount;
+            pageCount.textContent = savedCount;
+        } else {
+            navCount.textContent = '0';
+            pageCount.textContent = '0';
+        }
+    } catch (error) {
+        console.error('Error updating saved count:', error);
+        navCount.textContent = '0';
+        pageCount.textContent = '0';
+    }
+}
+
+        function showSavedProducts() {
+            if (!currentUser) {
+                openAuthModal();
+                return;
+            }
+            
+            document.getElementById('productListingPage').style.display = 'none';
+            document.getElementById('productDetailPage').style.display = 'none';
+            document.getElementById('savedProductsPage').style.display = 'block';
+            
+            displaySavedProducts();
+        }
+
+        // Enhanced displaySavedProducts function
+function displaySavedProducts() {
+    const container = document.getElementById('savedProductsContainer');
+    const grid = document.getElementById('savedProductsGrid');
+    const emptyMessage = document.getElementById('emptySavedMessage');
+    
+    if (!currentUser) {
+        emptyMessage.style.display = 'block';
+        grid.innerHTML = '';
+        updateSavedCount(0);
+        return;
+    }
+    
+    try {
+        const recyclerData = JSON.parse(localStorage.getItem('recycler_data') || '{}');
+        const userData = recyclerData[currentUser.email];
+        const savedProducts = userData && userData.savedProducts ? userData.savedProducts : [];
+        
+        console.log('Displaying saved products:', savedProducts);
+        
+        if (savedProducts.length === 0) {
+            grid.innerHTML = '';
+            emptyMessage.style.display = 'block';
+            updateSavedCount(0);
+            return;
+        }
+        
+        emptyMessage.style.display = 'none';
+        grid.innerHTML = '';
+        
+        savedProducts.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'saved-product-card';
+            
+            // Use consistent image URL construction
+            const imageUrl = product.image 
+                ? `http://localhost:5000/uploads/${product.image}`
+                : 'https://via.placeholder.com/300x200?text=No+Image';
+            
+            card.innerHTML = `
+                <button class="remove-saved" onclick="removeSavedProduct('${product._id}', event)">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="product-image">
+                    <img src="${imageUrl}" 
+                        onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found'; this.onerror=null;" 
+                        alt="${product.title}" />
+                </div>
+                <div class="product-info">
+                    <div class="product-price">₹${product.price}</div>
+                    <div class="product-title">${product.title}</div>
+                    <div class="product-details">
+                        <span class="product-location">
+                            <i class="fas fa-map-marker-alt"></i> ${product.location}
+                        </span>
+                    </div>
+                </div>
+            `;
+            
+            // Make the entire card clickable except the remove button
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.remove-saved')) {
+                    openProductDetail(product);
+                }
+            });
+            
+            grid.appendChild(card);
+        });
+        
+        updateSavedCount(savedProducts.length);
+        
+    } catch (error) {
+        console.error('Error displaying saved products:', error);
+        emptyMessage.style.display = 'block';
+        grid.innerHTML = '';
+        updateSavedCount(0);
+    }
+}
+
+
+    // Enhanced Bidding System Functions - FIXED: Match backend schema
+    async function loadBidData(productId) {
+        try {
+            const res = await fetch(`${API_BASE}/bids/product/${productId}`);
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const bidData = await res.json();
+            
+            updateBidSummary(bidData);
+            updateBidHistory(bidData);
+            updateBidChart(bidData);
+            checkUserBidStatus(bidData);
+            
+        } catch (err) {
+            console.error("Error fetching bid data:", err);
+            document.getElementById('bidHistoryBody').innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 1rem; color: var(--text-light);">
+                        Could not load bid data. Please try again later.
+                    </td>
+                </tr>
+            `;
+        }
+    }
+
+    // Enhanced placeBid function - FIXED: Match backend schema
+    async function placeBid() {
+        if (!currentUser) {
+            openAuthModal();
+            return;
+        }
+        
+        if (!currentProduct) return;
+        
+        const amount = Number(document.getElementById('bidAmount').value);
+        const messageDiv = document.getElementById('bidMessage');
+
+        if(!amount || amount <= 0) {
+            messageDiv.textContent = "❌ Enter a valid bid amount";
+            messageDiv.style.color = "red";
+            return;
+        }
+
+        // Check if user has already bid
+        try {
+            const bidRes = await fetch(`${API_BASE}/bids/product/${currentProduct._id}`);
+            const bidData = await bidRes.json();
+            const userBid = bidData.bids.find(bid => bid.bidderEmail === currentUser.email);
+            
+            if (userBid) {
+                messageDiv.textContent = "⚠️ You've already bid on this product. You can place a higher bid.";
+                messageDiv.style.color = "orange";
+                return;
+            }
+        } catch (err) {
+            console.error("Error checking existing bids:", err);
+        }
+
+        try {
+            const res = await fetch(`${API_BASE}/bids/product/${currentProduct._id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    recycler: currentUser.name, // Match backend schema
+                    amount: amount
+                })
+            });
+
+            const data = await res.json();
+            console.log('Bid response:', data);
+
+            if(data.success){
+                messageDiv.textContent = "✅ Bid placed successfully!";
+                messageDiv.style.color = "green";
+                document.getElementById('bidAmount').value = "";
+                
+                // Reload bid data to update UI
+                await loadBidData(currentProduct._id);
+            } else {
+                messageDiv.textContent = "❌ Failed to place bid. " + (data.message || "");
+                messageDiv.style.color = "red";
+            }
+        } catch(err){
+            console.error("Bid error:", err);
+            messageDiv.textContent = "⚠️ Server error. Please try again.";
+            messageDiv.style.color = "red";
+        }
+    }
+
+    // Check if current user has already bid on this product - FIXED: Match backend schema
+    // Check if current user has already bid on this product - FIXED: Check both field formats
+function checkUserBidStatus(bidData) {
+    const bids = bidData.bids || [];
+    let userBidStatus = document.getElementById('userBidStatus');
+    
+    // Create user bid status element if it doesn't exist
+    if (!userBidStatus) {
+        const bidForm = document.querySelector('#bid-form .bid-section');
+        userBidStatus = document.createElement('div');
+        userBidStatus.id = 'userBidStatus';
+        userBidStatus.className = 'user-bid-status';
+        bidForm.insertBefore(userBidStatus, bidForm.firstChild);
+    } else {
+        userBidStatus.innerHTML = '';
+    }
+    
+    if (!currentUser) return;
+    
+    // Check both field formats for user identification
+    const userBid = bids.find(bid => 
+        bid.bidderEmail === currentUser.email || 
+        bid.recycler === currentUser.name
+    );
+    
+    if (userBid) {
+        userBidStatus.innerHTML = `
+            <div>
+                <i class="fas fa-check-circle"></i>
+                <strong>You've already bid on this product</strong>
+            </div>
+            <div>Your bid: ₹${userBid.amount}</div>
+        `;
+        userBidStatus.style.display = 'flex';
+    } else {
+        userBidStatus.style.display = 'none';
+    }
+}
+
+    function updateBidSummary(bidData) {
+        const bids = bidData.bids || [];
+        const highestBid = bids.length > 0 
+            ? Math.max(...bids.map(bid => bid.amount))
+            : 0;
+            
+        document.getElementById('highestBid').textContent = `Highest Bid: ₹${highestBid}`;
+        document.getElementById('bidCount').textContent = `Total Bids: ${bids.length}`;
+    }
+
+    function updateBidHistory(bidData) {
+    const bids = bidData.bids || [];
+    const bidHistoryBody = document.getElementById('bidHistoryBody');
+    
+    bidHistoryBody.innerHTML = '';
+    
+    if (bids.length === 0) {
+        bidHistoryBody.innerHTML = `
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 1rem; color: var(--text-light);">
+                    No bids placed yet. Be the first to bid!
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    // Sort bids by amount (highest first)
+    const sortedBids = [...bids].sort((a, b) => b.amount - a.amount);
+    
+    sortedBids.forEach(bid => {
+        const row = document.createElement('tr');
+        const bidTime = new Date(bid.bidTime || bid.createdAt).toLocaleString();
+        
+        // Check if this bid is from the current user (both field formats)
+        const isUserBid = currentUser && (
+            bid.bidderEmail === currentUser.email || 
+            bid.recycler === currentUser.name
+        );
+        row.className = isUserBid ? 'bid-history-row user-bid' : 'bid-history-row other-bid';
+        
+        // Get bidder name from either field
+        const bidderName = bid.bidderName || bid.recycler;
+        
+        row.innerHTML = `
+            <td>
+                ${bidderName}
+                ${isUserBid ? '<span class="bidder-badge">You</span>' : ''}
+            </td>
+            <td>₹${bid.amount}</td>
+            <td>${bidTime}</td>
+            <td>${isUserBid ? '<i class="fas fa-user" title="Your bid"></i>' : ''}</td>
+        `;
+        
+        bidHistoryBody.appendChild(row);
+    });
+}
+
+    function updateBidChart(bidData) {
+        const bids = bidData.bids || [];
+        
+        // Sort bids by time to show progression
+        const sortedBids = [...bids].sort((a, b) => new Date(a.bidTime || a.createdAt) - new Date(b.bidTime || b.createdAt));
+        
+        const labels = [];
+        const data = [];
+        const backgroundColors = [];
+        
+        sortedBids.forEach((bid, index) => {
+            // Use bidder names or numbers for labels
+            labels.push(`Bid ${index + 1} (${(bid.bidderName || bid.recycler).split(' ')[0]})`);
+            data.push(bid.amount);
+            
+            // Color current user's bids differently
+            if (currentUser && bid.bidderEmail === currentUser.email) {
+                backgroundColors.push('rgba(33, 150, 243, 0.7)'); // Blue for user's bids
+            } else {
+                backgroundColors.push('rgba(76, 175, 80, 0.7)'); // Green for others
+            }
+        });
+        
+        const ctx = document.getElementById('bidChart').getContext('2d');
+        
+        if (bidChart) {
+            bidChart.destroy();
+        }
+        
+        if (data.length > 0) {
+            bidChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Bid Amount (₹)',
+                        data: data,
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: backgroundColors,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Bid Price Progression'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    const bidder = sortedBids[index].bidderName || sortedBids[index].recycler;
+                                    const isUser = currentUser && sortedBids[index].bidderEmail === currentUser.email;
+                                    return `${isUser ? 'Your bid' : bidder + "'s bid"}: ₹${context.parsed.y}`;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Bid Amount (₹)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Bid Sequence'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+   
+
+        // Enhanced placeBid function with better feedback - FIXED: Store in MongoDB
+        // Enhanced placeBid function - FIXED: Match backend schema
+      // Enhanced placeBid function - FIXED: Send both field formats for compatibility
+async function placeBid() {
+    if (!currentUser) {
+        openAuthModal();
+        return;
+    }
+    
+    if (!currentProduct) return;
+    
+    const amount = Number(document.getElementById('bidAmount').value);
+    const messageDiv = document.getElementById('bidMessage');
+
+    if(!amount || amount <= 0) {
+        messageDiv.textContent = "❌ Enter a valid bid amount";
+        messageDiv.style.color = "red";
+        return;
+    }
+
+    // Check if user has already bid
+    try {
+        const bidRes = await fetch(`${API_BASE}/bids/product/${currentProduct._id}`);
+        const bidData = await bidRes.json();
+        const userBid = bidData.bids.find(bid => bid.bidderEmail === currentUser.email || bid.recycler === currentUser.name);
+        
+        if (userBid) {
+            messageDiv.textContent = "⚠️ You've already bid on this product. You can place a higher bid.";
+            messageDiv.style.color = "orange";
+            return;
+        }
+    } catch (err) {
+        console.error("Error checking existing bids:", err);
+    }
+
+    try {
+        const res = await fetch(`${API_BASE}/bids/product/${currentProduct._id}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+                recycler: currentUser.name,           // Keep for backend compatibility
+                bidderName: currentUser.name,         // New field
+                bidderEmail: currentUser.email,       // New field
+                amount: amount
+            })
+        });
+
+        const data = await res.json();
+        console.log('Bid response:', data);
+
+        if(data.success){
+            messageDiv.textContent = "✅ Bid placed successfully!";
+            messageDiv.style.color = "green";
+            document.getElementById('bidAmount').value = "";
+            
+            // Reload bid data to update UI
+            await loadBidData(currentProduct._id);
+        } else {
+            messageDiv.textContent = "❌ Failed to place bid. " + (data.message || "");
+            messageDiv.style.color = "red";
+        }
+    } catch(err){
+        console.error("Bid error:", err);
+        messageDiv.textContent = "⚠️ Server error. Please try again.";
+        messageDiv.style.color = "red";
+    }
+}
+
+        // Rest of your existing functions
+        async function fetchProducts() {
+    try {
+        const res = await fetch(`${API_BASE}/products/recycle`);
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const newProducts = await res.json();
+        console.log('Fetched products from backend:', newProducts);
+        
+        // Debug: Check the structure of first product
+        if (newProducts.length > 0) {
+            console.log('First product structure:', newProducts[0]);
+            console.log('Available fields:', Object.keys(newProducts[0]));
+        }
+        
+        products = newProducts;
+        displayProducts(products);
+    } catch (err) {
+        console.error("Error fetching products:", err);
+        document.getElementById('productsGrid').innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:2rem; color:var(--text-light);">⚠️ Could not connect to server. Please make sure backend is running on port 5000.</p>';
+    }
+}
+
+        function displayProducts(productList) {
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = '';
+    
+    if(productList.length === 0){
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:var(--text-light);">No materials found.</div>';
+        return;
+    }
+    
+    productList.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        // FIXED: Use the same image URL construction as old working code
+        const imageUrl = product.image 
+            ? `http://localhost:5000/uploads/${product.image}`
+            : 'https://via.placeholder.com/300x200?text=No+Image';
+            
+        card.innerHTML = `
+            <div class="product-image">
+                <img src="${imageUrl}" 
+                    onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found'; this.onerror=null;" 
+                    alt="${product.title}" 
+                    loading="lazy" />
+            </div>
+            <div class="product-info">
+                <div class="product-price">₹${product.price}</div>
+                <div class="product-title">${product.title}</div>
+                <div class="product-details">
+                    <span class="product-location">
+                        <i class="fas fa-map-marker-alt"></i> ${product.location}
+                    </span>
+                </div>
+            </div>
+        `;
+        card.onclick = () => openProductDetail(product);
+        grid.appendChild(card);
+    });
+}
+
+        function addThumbnail(src, mainImage, isActive = false) {
+    const thumbnail = document.createElement('div');
+    thumbnail.className = `thumbnail ${isActive ? 'active' : ''}`;
+    
+    const img = document.createElement('img');
+    img.src = src;
+    img.onerror = function() {
+        console.log('Thumbnail image failed to load:', src);
+        this.src = 'https://via.placeholder.com/150x100?text=Image+Error';
+        this.onerror = null;
+    };
+    thumbnail.appendChild(img);
+    
+    thumbnail.onclick = function() {
+        // Remove active class from all thumbnails
+        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+        // Add active class to clicked thumbnail
+        this.classList.add('active');
+        // Update main image
+        mainImage.src = src;
+    };
+    
+    document.getElementById('thumbnailContainer').appendChild(thumbnail);
+}
+
+        function goBackToListing() {
+            document.getElementById('productDetailPage').style.display = 'none';
+            document.getElementById('savedProductsPage').style.display = 'none';
+            document.getElementById('productListingPage').style.display = 'grid';
+            document.getElementById('loginRequiredOverlay').style.display = 'none';
+        }
+
+        // WhatsApp Integration Functions
+        // WhatsApp Integration Functions - FIXED: Seller name fetching
+function openWhatsAppChat() {
+    if (!currentProduct) return;
+    
+    // Get the current seller info
+    const sellerName = currentProduct.seller || currentProduct.sellerName || currentProduct.username || 'Seller';
+    const sellerPhone = currentSellerPhone;
+    
+    // Set modal content with real data from backend
+    document.getElementById('whatsappProductTitle').textContent = currentProduct.title;
+    document.getElementById('whatsappSellerName').textContent = sellerName;
+    document.getElementById('whatsappSellerPhone').textContent = sellerPhone;
+    
+    // Show confirmation modal
+    document.getElementById('whatsappModal').style.display = 'flex';
+}
+
+function redirectToWhatsApp() {
+    if (!currentProduct || !currentSellerPhone) return;
+    
+    // Get the current seller info
+    const sellerName = currentProduct.seller || currentProduct.sellerName || currentProduct.username || 'Seller';
+    
+    // Format phone number (remove spaces, +, etc.)
+    const phone = currentSellerPhone.replace(/\s+/g, '').replace('+', '');
+    
+    // Create WhatsApp message with product details
+    const message = `Hello! I'm interested in your product: ${currentProduct.title} - ₹${currentProduct.price}. Can you provide more details?`;
+    
+    // Encode message for URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Create WhatsApp URL
+    const whatsappURL = `https://wa.me/${phone}?text=${encodedMessage}`;
+    
+    // Redirect to WhatsApp
+    window.open(whatsappURL, '_blank');
+    
+    // Close modal
+    closeWhatsAppModal();
+}
+
+        function makeOffer() {
+            if (!currentUser) {
+                openAuthModal();
+                return;
+            }
+            
+            const offer = prompt("Enter your offer amount:");
+            if (offer) {
+                alert(`Your offer of ₹${offer} has been sent to the seller!`);
+            }
+        }
+
+        function filterByCategory(category) {
+            const filtered = products.filter(p => p.category.toLowerCase().includes(category));
+            displayProducts(filtered);
+        }
+
+        function sortProducts(criteria) {
+            let sorted = [...products];
+            switch(criteria) {
+                case 'price-low':
+                    sorted.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sorted.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    sorted.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+                    break;
+            }
+            displayProducts(sorted);
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => 
+                p.title.toLowerCase().includes(query) || 
+                (p.description && p.description.toLowerCase().includes(query)) ||
+                p.category.toLowerCase().includes(query)
+            );
+            displayProducts(filtered);
+        }
+
+        function switchBidTab(tabId) {
+            document.querySelectorAll('.bid-tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeUserData();
+            checkLoginStatus();
+            fetchProducts();
+            
+            // Add event listener for user profile button
+            document.getElementById('userProfileBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleUserDropdown();
+            });
+        });
+    </script>
+</body>
+</html>

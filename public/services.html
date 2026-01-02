@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoOpCaRt - Services</title>
+    <meta name="author" content="Untree.co">
+    <link rel="shortcut icon" href="favicon.png">
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap4" />
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="css/tiny-slider.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, , #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Amazon-style Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 10000;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e7e7e7;
+            text-align: center;
+        }
+
+        .modal-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            background: #f5f5f5;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #a6a6a6;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .auth-btn:hover {
+            opacity: 0.9;
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            color: #767676;
+            font-size: 12px;
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e7e7e7;
+        }
+
+        .auth-divider span {
+            background: white;
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e7e7e7;
+        }
+
+        .auth-toggle p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .toggle-link {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
+
+        .terms {
+            font-size: 12px;
+            color: #666;
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+
+        .terms a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* OTP Section */
+        .otp-section {
+            text-align: center;
+        }
+
+        .otp-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .otp-subtitle {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .otp-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .otp-input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #a6a6a6;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .otp-timer {
+            color: #666;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+
+        .resend-otp {
+            color: #667eea;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .resend-otp:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Messages */
+        .alert {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* User Dropdown */
+        .dropdown-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Start Header/Navigation -->
+    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="LoOpCaRt navigation bar">
+
+        <div class="container">
+            <a class="navbar-brand" href="/index">LoOpCaRt<span>.</span></a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsLoOpCaRt" aria-controls="navbarsLoOpCaRt" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsLoOpCaRt">
+                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/index">Home</a>
+                    </li>
+                    <li><a class="nav-link" href="/shop">Shop</a></li>
+                    <li><a class="nav-link" href="/about">About us</a></li>
+                    <li class="active"><a class="nav-link" href="/services">Services</a></li>
+                    <li><a class="nav-link" href="/blog">Blog</a></li>
+                    <li><a class="nav-link" href="/contact">Contact us</a></li>
+                    <li><a class="nav-link" href="/Carbon">Carbon Calci</a></li>
+                </ul>
+
+                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                    <li><a class="nav-link" href="#" id="userProfileBtn"><img src="images/user.svg"></a></li>
+                    <li><a class="nav-link" href="/cart"><img src="images/cart.svg"></a></li>
+                </ul>
+            </div>
+        </div>
+            
+    </nav>
+    <!-- End Header/Navigation -->
+
+    <div class="container">
+        <div class="hero">
+            <h1>Our Services</h1>
+            <p>Join the circular economy movement. Choose your role and start making a difference today.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card" data-role="buyer">
+                <div class="service-icon">🛒</div>
+                <h3>Buyer</h3>
+                <p>Discover amazing reused and recycled products. Find great deals while supporting sustainable practices.</p>
+                <button class="btn">Join as Buyer</button>
+            </div>
+
+            <div class="service-card" data-role="seller">
+                <div class="service-icon">🏪</div>
+                <h3>Seller</h3>
+                <p>List your products for sale. Reach environmentally conscious buyers and give your items a second life.</p>
+                <button class="btn">Join as Seller</button>
+            </div>
+
+            <div class="service-card" data-role="recycler">
+                <div class="service-icon">♻️</div>
+                <h3>Recycler</h3>
+                <p>Help process materials and items for recycling. Get notified about products marked for recycling.</p>
+                <button class="btn">Join as Recycler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Amazon-style Authentication Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            
+            <div class="modal-header">
+                <div class="modal-logo">LoOpCaRt</div>
+            </div>
+
+            <div class="modal-body">
+                <!-- Error/Success Messages -->
+                <div id="alertMessage" class="alert" style="display: none;"></div>
+
+                <!-- Login Form -->
+                <div id="loginSection">
+                    <h2 style="margin-bottom: 20px; font-size: 20px; color: #333;">Sign in</h2>
+                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email or mobile phone number</label>
+                            <input type="text" class="form-control" id="loginEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginRole">I am a</label>
+                            <select class="form-control" id="loginRole" required>
+                                <option value="">Select your role</option>
+                                <option value="buyer">Buyer</option>
+                                <option value="seller">Seller</option>
+                                <option value="recycler">Recycler</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="auth-btn" id="loginBtn">
+                            <span id="loginBtnText">Continue</span>
+                            <div class="loading" id="loginLoading">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                    </form>
+
+                    <div class="terms">
+                        By continuing, you agree to LoOpCaRt's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.
+                    </div>
+
+                    <div class="auth-divider">
+                        <span>New to LoOpCaRt?</span>
+                    </div>
+
+                    <button class="auth-btn" style="background: #f0f0f0; color: #333;" onclick="showSignupSection()">
+                        Create your LoOpCaRt account
+                    </button>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signupSection" style="display: none;">
+                    <h2 style="margin-bottom: 20px; font-size: 20px; color: #333;">Create account</h2>
+                    
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupName">Your name</label>
+                            <input type="text" class="form-control" id="signupName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPhone">Mobile number</label>
+                            <input type="tel" class="form-control" id="signupPhone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" placeholder="At least 6 characters" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupRole">I want to join as</label>
+                            <select class="form-control" id="signupRole" required>
+                                <option value="">Select your role</option>
+                                <option value="buyer">Buyer</option>
+                                <option value="seller">Seller</option>
+                                <option value="recycler">Recycler</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="auth-btn" id="signupBtn">
+                            <span id="signupBtnText">Verify email</span>
+                            <div class="loading" id="signupLoading">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                    </form>
+
+                    <div class="terms">
+                        By creating an account, you agree to LoOpCaRt's <a href="#">Conditions of Use</a> and <a href="#">Privacy Notice</a>.
+                    </div>
+
+                    <div class="auth-divider">
+                        <span>Already have an account?</span>
+                    </div>
+
+                    <button class="auth-btn" style="background: #f0f0f0; color: #333;" onclick="showLoginSection()">
+                        Sign in
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Footer Section -->
+    <footer class="footer-section">
+        <div class="container relative">
+
+          
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="subscription-form">
+                        <h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+                        <form action="#" class="row g-3">
+                            <div class="col-auto">
+                                <input type="text" class="form-control" placeholder="Enter your name">
+                            </div>
+                            <div class="col-auto">
+                                <input type="email" class="form-control" placeholder="Enter your email">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-primary">
+                                    <span class="fa fa-paper-plane"></span>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-5 mb-5">
+                <div class="col-lg-4">
+                    <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">LoOpCaRt<span>.</span></a></div>
+                    <p class="mb-4">At LoOpCaRt, we believe in second chances — for products and the planet. Discover a smarter way to shop sustainably and reduce waste through circular living.</p>
+
+                    <ul class="list-unstyled custom-social">
+                        <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+                        <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+                        <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+                        <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="row links-wrap">
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Contact us</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Support</a></li>
+                                <li><a href="#">Knowledge base</a></li>
+                                <li><a href="#">Live chat</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Jobs</a></li>
+                                <li><a href="#">Our team</a></li>
+                                <li><a href="#">Leadership</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Nordic Chair</a></li>
+                                <li><a href="#">Kruzo Aero</a></li>
+                                <li><a href="#">Ergonomic Chair</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-top copyright">
+                <div class="row pt-4">
+                    <div class="col-lg-6">
+                        <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by  <!-- License information: https://untree.co/license/ -->
+        </p>
+                    </div>
+
+                    <div class="col-lg-6 text-center text-lg-end">
+                        <ul class="list-unstyled d-inline-flex ms-auto">
+                            <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    <!-- End Footer Section -->	
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/custom.js"></script>
+
+    <script>
+        // Amazon-style Configuration
+        const BASE_URL = "http://localhost:5000/api";
+        let currentUser = null;
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("🟢 LoOpCaRt Amazon-style initialized");
+            checkAmazonLoginStatus();
+            setupEventListeners();
+        });
+
+        function checkAmazonLoginStatus() {
+            const token = localStorage.getItem('amazon_token');
+            const userData = localStorage.getItem('amazon_user');
+            
+            if (token && userData) {
+                try {
+                    currentUser = JSON.parse(userData);
+                    showAmazonUserProfile();
+                    loadUserSpecificData();
+                } catch (error) {
+                    console.error('Error parsing user data:', error);
+                    amazonLogout();
+                }
+            } else {
+                showGuestInterface();
+            }
+        }
+
+        function setupEventListeners() {
+            // Login form
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            
+            if (loginForm) loginForm.addEventListener('submit', handleAmazonLogin);
+            if (signupForm) signupForm.addEventListener('submit', handleAmazonSignup);
+            
+            // Modal events
+            const modal = document.getElementById('authModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) closeModal();
+                });
+            }
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // Service cards - MODIFIED: Direct redirect instead of opening auth modal
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const role = this.getAttribute('data-role');
+                    redirectToRoleWebsite(role);
+                });
+            });
+
+            // Join buttons - MODIFIED: Direct redirect instead of opening auth modal
+            document.querySelectorAll('.btn').forEach(button => {
+                if (button.textContent.includes('Join as')) {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const card = this.closest('.service-card');
+                        const role = card.getAttribute('data-role');
+                        redirectToRoleWebsite(role);
+                    });
+                }
+            });
+        }
+
+        // NEW FUNCTION: Direct redirect to role-specific websites
+        function redirectToRoleWebsite(role) {
+            const urls = {
+                'buyer': '/Buyer',
+                'seller': '/Seller',
+                'recycler': '/recycle'
+            };
+            
+            const url = urls[role];
+            if (url) {
+                console.log(`Redirecting to ${role} website: ${url}`);
+                window.location.href = url;
+            } else {
+                console.error(`No URL found for role: ${role}`);
+            }
+        }
+
+        // Modal Functions
+        function openAuthModal(role) {
+            console.log("Opening auth modal for role:", role);
+            
+            // Set the selected role in both forms
+            const loginRole = document.getElementById('loginRole');
+            const signupRole = document.getElementById('signupRole');
+            
+            if (loginRole) loginRole.value = role;
+            if (signupRole) signupRole.value = role;
+            
+            // Show the modal
+            const modal = document.getElementById('authModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            } else {
+                console.error('Auth modal not found');
+            }
+            
+            // Show login section by default
+            showLoginSection();
+            
+            // Clear any previous messages
+            hideAlert();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('authModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+            
+            // Reset forms
+            resetForms();
+        }
+
+        function showLoginSection() {
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('signupSection').style.display = 'none';
+            hideAlert();
+        }
+
+        function showSignupSection() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('signupSection').style.display = 'block';
+            hideAlert();
+        }
+
+        function resetForms() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            
+            if (loginForm) loginForm.reset();
+            if (signupForm) signupForm.reset();
+            
+            hideAlert();
+        }
+
+        // Alert Functions
+        function showAlert(message, type = 'success') {
+            const alertDiv = document.getElementById('alertMessage');
+            if (alertDiv) {
+                alertDiv.textContent = message;
+                alertDiv.className = `alert alert-${type}`;
+                alertDiv.style.display = 'block';
+                
+                // Auto-hide success messages after 3 seconds
+                if (type === 'success') {
+                    setTimeout(hideAlert, 3000);
+                }
+            }
+        }
+
+        function hideAlert() {
+            const alertDiv = document.getElementById('alertMessage');
+            if (alertDiv) {
+                alertDiv.style.display = 'none';
+            }
+        }
+
+        // Loading Functions
+        function setLoading(formType, isLoading) {
+            const btn = document.getElementById(`${formType}Btn`);
+            const btnText = document.getElementById(`${formType}BtnText`);
+            const loading = document.getElementById(`${formType}Loading`);
+            
+            if (btn && btnText && loading) {
+                if (isLoading) {
+                    btn.disabled = true;
+                    btnText.style.display = 'none';
+                    loading.style.display = 'block';
+                } else {
+                    btn.disabled = false;
+                    btnText.style.display = 'block';
+                    loading.style.display = 'none';
+                }
+            }
+        }
+
+        // Amazon-style Authentication
+        async function handleAmazonSignup(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signupName')?.value;
+            const email = document.getElementById('signupEmail')?.value;
+            const phone = document.getElementById('signupPhone')?.value;
+            const password = document.getElementById('signupPassword')?.value;
+            const role = document.getElementById('signupRole')?.value;
+
+            if (!name || !email || !phone || !password || !role) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+
+            setLoading('signup', true);
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Mock successful signup
+                const mockUser = {
+                    id: Math.floor(Math.random() * 1000),
+                    name: name,
+                    email: email,
+                    role: role,
+                    phone: phone
+                };
+                
+                const mockToken = 'mock_jwt_token_' + Math.random().toString(36).substring(2);
+                
+                // Amazon-style: Store user data
+                localStorage.setItem('amazon_token', mockToken);
+                localStorage.setItem('amazon_user', JSON.stringify(mockUser));
+                currentUser = mockUser;
+                
+                showAlert(`Welcome to LoOpCaRt, ${mockUser.name}!`, 'success');
+                setTimeout(() => {
+                    redirectToDashboard();
+                }, 1500);
+            } catch (error) {
+                console.error('Signup error:', error);
+                showAlert('Network error. Please try again.', 'error');
+            } finally {
+                setLoading('signup', false);
+            }
+        }
+
+        async function handleAmazonLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail')?.value;
+            const password = document.getElementById('loginPassword')?.value;
+            const role = document.getElementById('loginRole')?.value;
+
+            if (!email || !password || !role) {
+                showAlert('Please fill in all fields', 'error');
+                return;
+            }
+
+            setLoading('login', true);
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Mock successful login
+                const mockUser = {
+                    id: Math.floor(Math.random() * 1000),
+                    name: email.split('@')[0],
+                    email: email,
+                    role: role,
+                    phone: '123-456-7890'
+                };
+                
+                const mockToken = 'mock_jwt_token_' + Math.random().toString(36).substring(2);
+                
+                // Amazon-style: Store user data
+                localStorage.setItem('amazon_token', mockToken);
+                localStorage.setItem('amazon_user', JSON.stringify(mockUser));
+                currentUser = mockUser;
+                
+                showAlert(`Welcome back, ${mockUser.name}!`, 'success');
+                setTimeout(() => {
+                    closeModal();
+                    redirectToDashboard();
+                }, 1500);
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Network error. Please try again.', 'error');
+            } finally {
+                setLoading('login', false);
+            }
+        }
+
+        // Amazon-style User Interface
+        function showAmazonUserProfile() {
+            const profileBtn = document.getElementById('userProfileBtn');
+            if (profileBtn && currentUser) {
+                profileBtn.innerHTML = `<img src="images/user.svg">`;
+                
+                // Add dropdown menu (Amazon-style)
+                profileBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showUserDropdown();
+                });
+            }
+        }
+
+        function showUserDropdown() {
+            // Remove existing dropdown
+            const existingDropdown = document.getElementById('userDropdown');
+            if (existingDropdown) {
+                existingDropdown.remove();
+                return;
+            }
+
+            const dropdown = document.createElement('div');
+            dropdown.id = 'userDropdown';
+            dropdown.style.cssText = `
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+                min-width: 200px;
+                margin-top: 5px;
+            `;
+
+            dropdown.innerHTML = `
+                <div style="padding: 15px; border-bottom: 1px solid #eee;">
+                    <div style="font-weight: bold;">${currentUser.name}</div>
+                    <div style="color: #666; font-size: 12px;">${currentUser.email}</div>
+                </div>
+                <div style="padding: 10px 0;">
+                    <div class="dropdown-item" onclick="viewProfile()">
+                        <i class="fas fa-user" style="margin-right: 8px;"></i>
+                        Your Profile
+                    </div>
+                    <div class="dropdown-item" onclick="viewYourProducts()">
+                        <i class="fas fa-box" style="margin-right: 8px;"></i>
+                        Your Products
+                    </div>
+                    <div class="dropdown-item" onclick="amazonLogout()">
+                        <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                        Sign Out
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('userProfileBtn').appendChild(dropdown);
+
+            // Close dropdown when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', closeDropdown);
+            }, 100);
+        }
+
+        function closeDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) dropdown.remove();
+            document.removeEventListener('click', closeDropdown);
+        }
+
+        function amazonLogout() {
+            localStorage.removeItem('amazon_token');
+            localStorage.removeItem('amazon_user');
+            currentUser = null;
+            
+            const profileBtn = document.getElementById('userProfileBtn');
+            if (profileBtn) profileBtn.innerHTML = `<img src="images/user.svg">`;
+            
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) dropdown.remove();
+            
+            showAlert('Signed out successfully', 'success');
+            showGuestInterface();
+            
+            setTimeout(() => {
+                hideAlert();
+                location.reload(); // Refresh to show guest interface
+            }, 1500);
+        }
+
+        function showGuestInterface() {
+            // Show guest-specific content
+            console.log('👤 Showing guest interface');
+        }
+
+        function loadUserSpecificData() {
+            if (currentUser) {
+                console.log(`📊 Loading data specifically for: ${currentUser.name}`);
+                // Load user's products, bids, etc.
+            }
+        }
+
+        // Redirect to Dashboard
+        function redirectToDashboard() {
+            if (currentUser) {
+                switch(currentUser.role) {
+                    case 'buyer':
+                        window.location.href = '/Buyer';
+                        break;
+                    case 'seller':
+                        window.location.href = '/Seller';
+                        break;
+                    case 'recycler':
+                        window.location.href = '/recycle';
+                        break;
+                    default:
+                        window.location.href = '/dashboard';
+                }
+            } else {
+                window.location.href = '/dashboard';
+            }
+        }
+
+        // Make functions global
+        window.amazonLogout = amazonLogout;
+        window.viewProfile = function() {
+            alert(`Profile: ${currentUser.name}\nEmail: ${currentUser.email}\nRole: ${currentUser.role}`);
+            closeDropdown();
+        };
+        window.viewYourProducts = function() {
+            alert('Loading your products...');
+            closeDropdown();
+        };
+        window.openAuthModal = openAuthModal;
+        window.closeModal = closeModal;
+        window.showLoginSection = showLoginSection;
+        window.showSignupSection = showSignupSection;
+    </script>
+</body>
+</html>

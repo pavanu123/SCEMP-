@@ -1,0 +1,263 @@
+/* Carbon Calculator Styles */
+.carbon-calculator-section {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 2px solid #4CAF50;
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.15);
+}
+
+.carbon-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.carbon-header h3 {
+    color: #2E7D32;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.carbon-header p {
+    color: #666;
+    font-size: 1rem;
+}
+
+.calculator-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.calc-section {
+    margin-bottom: 1.5rem;
+}
+
+.calc-section label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.calc-select, .calc-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.calc-select:focus, .calc-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.calc-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.calc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+/* Results Container */
+.results-container {
+    margin-top: 2rem;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.impact-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background: white;
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.metric-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+}
+
+.co2-saved { background: #e3f2fd; color: #1976d2; }
+.energy-saved { background: #fff3e0; color: #f57c00; }
+.water-saved { background: #e3f2fd; color: #1976d2; }
+.trees-saved { background: #e8f5e8; color: #388e3c; }
+
+.metric-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Comparisons */
+.comparisons {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.comparisons h4 {
+    color: #2E7D32;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.comparison-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.comparison-item i {
+    width: 30px;
+    color: #4CAF50;
+    font-size: 1.2rem;
+}
+
+/* Share Buttons */
+.share-results {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.share-btn, .certificate-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.share-btn {
+    background: #2196F3;
+    color: white;
+}
+
+.certificate-btn {
+    background: #FF9800;
+    color: white;
+}
+
+.share-btn:hover {
+    background: #1976D2;
+    transform: translateY(-2px);
+}
+
+.certificate-btn:hover {
+    background: #F57C00;
+    transform: translateY(-2px);
+}
+
+/* Certificate Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content.certificate {
+    background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    border: 5px solid #4CAF50;
+    position: relative;
+}
+
+.certificate-header {
+    margin-bottom: 2rem;
+}
+
+.certificate-badge {
+    font-size: 3rem;
+    color: #FFD700;
+    margin: 1rem 0;
+}
+
+.certificate-stats {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.cert-stat {
+    font-size: 1.2rem;
+    margin: 0.8rem 0;
+    color: #333;
+}
+
+.signature {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 2px solid #4CAF50;
+}
+
+.download-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

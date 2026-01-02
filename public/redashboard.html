@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoopCart Recycler - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="redash.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">♻</div>
+                <div>
+                    <h1>LoopCart <span>Recycler</span></h1>
+                </div>
+            </div>
+            
+            <div class="user-info">
+                <h2 id="userName">Loading...</h2>
+                <p id="userPhone">Loading...</p>
+                <p id="userLocation">Loading...</p>
+            </div>
+            
+            <div class="nav-links">
+                <ul>
+                    <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-gavel"></i> Active Bids</a></li>
+                    <li><a href="#"><i class="fas fa-check-circle"></i> Accepted Products</a></li>
+                    <li><a href="#"><i class="fas fa-truck-pickup"></i> Pickup Status</a></li>
+                    <li><a href="#"><i class="fas fa-comment-alt"></i> Messages</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> My Profile</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Finance</a></li>
+                    <li><a href="#"><i class="fas fa-shipping-fast"></i> Ship With LC</a></li>
+                    <li><a href="#"><i class="fas fa-lightbulb"></i> Any Suggestion</a></li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3>Need Help?</h3>
+                <p>Call: 096-9698-9666</p>
+                <a href="#" class="chat-btn">Chat With Us</a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div class="user-actions">
+                    <div class="notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notificationCount">0</span>
+                    </div>
+                    <div class="user-avatar" id="userAvatar">U</div>
+                </div>
+            </div>
+            
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3><i class="fas fa-mobile-alt"></i> Primary Mobile</h3>
+                    <div class="info-item">
+                        <span class="info-label">Phone Number:</span>
+                        <span class="info-value" id="primaryPhone">Loading...</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-envelope"></i> Contact Information</h3>
+                    <div class="info-item">
+                        <span class="info-label">Primary Email:</span>
+                        <span class="info-value" id="primaryEmail">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Address:</span>
+                        <span class="info-value" id="userAddress">Loading...</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-building"></i> Company Information</h3>
+                    <div class="info-item">
+                        <span class="info-label">Company Name:</span>
+                        <span class="info-value">LoopCart Recycler</span>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="Search...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-calendar-alt"></i> Member Since</h3>
+                    <div class="info-item">
+                        <span class="info-label">This Month</span>
+                        <span class="info-value" id="memberSince">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Alternative Mobile:</span>
+                        <span class="info-value" id="altPhone">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Alternative Email:</span>
+                        <span class="info-value" id="altEmail">Loading...</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3><i class="fas fa-tags"></i> Category</h3>
+                    <div class="info-item">
+                        <span class="info-label">Category Website:</span>
+                        <span class="info-value">www.loopcartrecycler.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Category Website:</span>
+                        <span class="info-value">www.recycledproducts.com</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-section">
+                <div class="stat-card">
+                    <h4>Recycled Items</h4>
+                    <div class="number" id="recycledCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Active Bids</h4>
+                    <div class="number" id="activeBidsCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Accepted Products</h4>
+                    <div class="number" id="acceptedProductsCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Pickup Pending</h4>
+                    <div class="number" id="pickupPendingCount">0</div>
+                </div>
+            </div>
+            
+            <!-- New Featured Sections -->
+            <div class="featured-sections">
+                <div class="featured-card">
+                    <h3><i class="fas fa-gavel"></i> Active Bids</h3>
+                    <div id="activeBidsList">
+                        <div class="loading-text">Loading active bids...</div>
+                        <div class="spinner"></div>
+                    </div>
+                    <a href="#" class="view-all">View All Bids →</a>
+                </div>
+                
+                <div class="featured-card">
+                    <h3><i class="fas fa-check-circle"></i> Accepted Products</h3>
+                    <div id="acceptedProductsList">
+                        <div class="loading-text">Loading accepted products...</div>
+                        <div class="spinner"></div>
+                    </div>
+                    <a href="#" class="view-all">View All Products →</a>
+                </div>
+                
+                <div class="featured-card">
+                    <h3><i class="fas fa-truck-pickup"></i> Pickup Status</h3>
+                    <div id="pickupStatusList">
+                        <div class="loading-text">Loading pickup status...</div>
+                        <div class="spinner"></div>
+                    </div>
+                    <a href="#" class="view-all">View All Pickups →</a>
+                </div>
+            </div>
+            
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <ul class="activity-list" id="recentActivityList">
+                    <li>
+                        <div class="activity-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="activity-text">Loading recent activity...</div>
+                        <div class="activity-time">Just now</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:5000/api';
+        
+        // Current user data - will be loaded from localStorage
+        let currentUser = null;
+
+        // DOM Elements
+        const userName = document.getElementById('userName');
+        const userPhone = document.getElementById('userPhone');
+        const userLocation = document.getElementById('userLocation');
+        const userAvatar = document.getElementById('userAvatar');
+        const primaryPhone = document.getElementById('primaryPhone');
+        const primaryEmail = document.getElementById('primaryEmail');
+        const userAddress = document.getElementById('userAddress');
+        const altPhone = document.getElementById('altPhone');
+        const altEmail = document.getElementById('altEmail');
+        const memberSince = document.getElementById('memberSince');
+        
+        // Stats Elements
+        const recycledCount = document.getElementById('recycledCount');
+        const activeBidsCount = document.getElementById('activeBidsCount');
+        const acceptedProductsCount = document.getElementById('acceptedProductsCount');
+        const pickupPendingCount = document.getElementById('pickupPendingCount');
+        
+        // List Elements
+        const activeBidsList = document.getElementById('activeBidsList');
+        const acceptedProductsList = document.getElementById('acceptedProductsList');
+        const pickupStatusList = document.getElementById('pickupStatusList');
+        const recentActivityList = document.getElementById('recentActivityList');
+        const notificationCount = document.getElementById('notificationCount');
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load current user from localStorage
+            loadCurrentUser();
+            
+            // Set up navigation
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Load user data
+            loadUserData();
+            
+            // Load dashboard data
+            loadDashboardData();
+            
+            // Notification click handler
+            const notification = document.querySelector('.notification');
+            notification.addEventListener('click', function() {
+                alert('You have ' + notificationCount.textContent + ' new notifications');
+            });
+        });
+
+        // Load current user from localStorage
+        function loadCurrentUser() {
+            const userData = localStorage.getItem('current_recycler_user');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                console.log('Loaded user:', currentUser);
+            } else {
+                // Redirect to login if no user found
+                alert('Please login first');
+                window.location.href = 'recycle.html';
+                return;
+            }
+        }
+
+        // Load user data
+        function loadUserData() {
+            if (!currentUser) return;
+            
+            userName.textContent = currentUser.name || 'User';
+            userPhone.textContent = currentUser.phone || 'Not provided';
+            userLocation.textContent = currentUser.location || 'Location not set';
+            userAvatar.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+            primaryPhone.textContent = currentUser.phone || 'Not provided';
+            primaryEmail.textContent = currentUser.email || 'Not provided';
+            userAddress.textContent = currentUser.address || 'Address not set';
+            altPhone.textContent = currentUser.altPhone || 'Not provided';
+            altEmail.textContent = currentUser.altEmail || 'Not provided';
+            memberSince.textContent = currentUser.memberSince || new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            showLoadingState();
+            
+            if (!currentUser) {
+                showErrorState('Please login to view dashboard');
+                return;
+            }
+
+            try {
+                // Load user-specific data from localStorage
+                const recyclerData = JSON.parse(localStorage.getItem('recycler_data') || '{}');
+                const userData = recyclerData[currentUser.email];
+                
+                if (userData) {
+                    displayDashboardData(userData);
+                } else {
+                    // If no user data found, create empty structure
+                    const emptyUserData = {
+                        savedProducts: [],
+                        bids: [],
+                        activity: ['Account created'],
+                        stats: {
+                            activeBids: 0,
+                            acceptedProducts: 0,
+                            recycledItems: 0,
+                            pickupPending: 0
+                        }
+                    };
+                    displayDashboardData(emptyUserData);
+                }
+                
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                showErrorState('Error loading dashboard data');
+            }
+        }
+
+        // Display dashboard data
+        function displayDashboardData(userData) {
+            updateStats(userData);
+            displayActiveBids(userData.bids || []);
+            displayAcceptedProducts(userData.savedProducts || []);
+            displayPickupStatus(userData.savedProducts || []);
+            displayRecentActivity(userData.activity || []);
+        }
+
+        // Update stats
+        function updateStats(userData) {
+            const bids = userData.bids || [];
+            const savedProducts = userData.savedProducts || [];
+            
+            const activeBids = bids.filter(bid => 
+                !bid.status || bid.status === 'Active' || bid.status === 'pending'
+            ).length;
+            
+            const acceptedProducts = savedProducts.length;
+            
+            activeBidsCount.textContent = activeBids;
+            acceptedProductsCount.textContent = acceptedProducts;
+            pickupPendingCount.textContent = acceptedProducts; // Assuming all accepted need pickup
+            recycledCount.textContent = acceptedProducts; // Assuming all accepted are recycled
+            notificationCount.textContent = activeBids + acceptedProducts;
+        }
+
+        // Display active bids
+        function displayActiveBids(bids) {
+            const activeBids = bids.filter(bid => 
+                !bid.status || bid.status === 'Active' || bid.status === 'pending' || bid.status === 'leading'
+            );
+
+            if (activeBids.length === 0) {
+                activeBidsList.innerHTML = '<div class="loading-text">No active bids found</div>';
+                return;
+            }
+
+            let html = '';
+            activeBids.slice(0, 3).forEach(bid => {
+                html += `
+                    <div class="bid-item">
+                        <div class="bid-info">
+                            <div class="bid-title">${bid.productTitle || 'Product Bid'}</div>
+                            <div class="bid-details">Amount: ₹${bid.amount || 'N/A'}</div>
+                            <div class="bid-time">${formatTimeAgo(bid.timestamp)}</div>
+                        </div>
+                        <div class="bid-status status-active">Active</div>
+                    </div>
+                `;
+            });
+
+            activeBidsList.innerHTML = html;
+        }
+
+        // Display accepted products
+        function displayAcceptedProducts(products) {
+            if (products.length === 0) {
+                acceptedProductsList.innerHTML = '<div class="loading-text">No accepted products yet</div>';
+                return;
+            }
+
+            let html = '';
+            products.slice(0, 3).forEach(product => {
+                html += `
+                    <div class="product-item">
+                        <div class="product-info">
+                            <div class="product-title">${product.title || 'Unknown Product'}</div>
+                            <div class="product-details">Price: ₹${product.price || 'N/A'}</div>
+                            <div class="product-location">${product.location || 'Location not specified'}</div>
+                        </div>
+                        <div class="product-status status-accepted">Accepted</div>
+                    </div>
+                `;
+            });
+
+            acceptedProductsList.innerHTML = html;
+        }
+
+        // Display pickup status
+        function displayPickupStatus(products) {
+            if (products.length === 0) {
+                pickupStatusList.innerHTML = '<div class="loading-text">No pickups scheduled</div>';
+                return;
+            }
+
+            let html = '';
+            products.slice(0, 3).forEach((product, index) => {
+                const pickupDate = new Date();
+                pickupDate.setDate(pickupDate.getDate() + index + 1);
+                
+                html += `
+                    <div class="pickup-item">
+                        <div class="pickup-info">
+                            <div class="pickup-title">${product.title || 'Product'}</div>
+                            <div class="pickup-details">Scheduled: ${formatDate(pickupDate)}</div>
+                            <div class="pickup-address">${product.location || 'Address not specified'}</div>
+                        </div>
+                        <div class="pickup-status status-scheduled">Scheduled</div>
+                    </div>
+                `;
+            });
+
+            pickupStatusList.innerHTML = html;
+        }
+
+        // Display recent activity
+        function displayRecentActivity(activities) {
+            if (activities.length === 0) {
+                activities = ['Welcome to LoopCart Recycler Dashboard'];
+            }
+
+            let html = '';
+            activities.slice(0, 4).forEach(activity => {
+                const isString = typeof activity === 'string';
+                const activityText = isString ? activity : activity.text;
+                const activityTime = isString ? new Date() : (activity.timestamp || new Date());
+                const activityIcon = isString ? 'fas fa-star' : (activity.icon || 'fas fa-info-circle');
+                
+                html += `
+                    <li>
+                        <div class="activity-icon">
+                            <i class="${activityIcon}"></i>
+                        </div>
+                        <div class="activity-text">${activityText}</div>
+                        <div class="activity-time">${formatTimeAgo(activityTime)}</div>
+                    </li>
+                `;
+            });
+
+            recentActivityList.innerHTML = html;
+        }
+
+        // Helper functions
+        function formatTimeAgo(date) {
+            if (!date) return 'Recently';
+            
+            const now = new Date();
+            const inputDate = new Date(date);
+            const diff = now - inputDate;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            return `${days}d ago`;
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function showLoadingState() {
+            activeBidsList.innerHTML = '<div class="loading-text">Loading...</div><div class="spinner"></div>';
+            acceptedProductsList.innerHTML = '<div class="loading-text">Loading...</div><div class="spinner"></div>';
+            pickupStatusList.innerHTML = '<div class="loading-text">Loading...</div><div class="spinner"></div>';
+            recentActivityList.innerHTML = '<li><div class="activity-text">Loading...</div></li>';
+        }
+
+        function showErrorState(message) {
+            activeBidsList.innerHTML = `<div class="loading-text">${message}</div>`;
+            acceptedProductsList.innerHTML = `<div class="loading-text">${message}</div>`;
+            pickupStatusList.innerHTML = `<div class="loading-text">${message}</div>`;
+            recentActivityList.innerHTML = `<li><div class="activity-text">${message}</div></li>`;
+        }
+
+        // Add some CSS for the new elements
+        const style = document.createElement('style');
+        style.textContent = `
+            .bid-item, .product-item, .pickup-item {
+                display: flex;
+                justify-content: between;
+                align-items: center;
+                padding: 10px;
+                margin-bottom: 8px;
+                background: #f8f9fa;
+                border-radius: 8px;
+                border-left: 4px solid #4CAF50;
+            }
+            
+            .bid-info, .product-info, .pickup-info {
+                flex: 1;
+            }
+            
+            .bid-title, .product-title, .pickup-title {
+                font-weight: bold;
+                color: #333;
+            }
+            
+            .bid-details, .product-details, .pickup-details,
+            .bid-time, .product-location, .pickup-address {
+                font-size: 12px;
+                color: #666;
+                margin-top: 2px;
+            }
+            
+            .bid-status, .product-status, .pickup-status {
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            
+            .status-active {
+                background: #e8f5e8;
+                color: #2e7d32;
+            }
+            
+            .status-accepted {
+                background: #e3f2fd;
+                color: #1565c0;
+            }
+            
+            .status-scheduled {
+                background: #fff3e0;
+                color: #ef6c00;
+            }
+            
+            .spinner {
+                border: 2px solid #f3f3f3;
+                border-top: 2px solid #4CAF50;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                animation: spin 1s linear infinite;
+                margin: 10px auto;
+            }
+            
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            .loading-text {
+                text-align: center;
+                color: #666;
+                padding: 10px;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
